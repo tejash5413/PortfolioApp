@@ -1,15 +1,5 @@
-# Use a base image with Nginx
-FROM nginx:alpine
-
-# Set the working directory inside the container
-WORKDIR /usr/share/nginx/html
-
-# Clone the repository inside the container
-RUN ls /usr/share/nginx/html
-COPY /var/lib/jenkins/workspace/WebApp /usr/share/nginx/html
-
-# Expose port 80 for the web server
+FROM openjdk:17-jdk-alpine
 EXPOSE 8070
-
-# Start Nginx
-CMD ["nginx", "-g", "daemon off;"]
+COPY target/webapp.app-1.0-SNAPSHOT.jar /usr/src/app/app.jar
+WORKDIR /usr/src/app
+CMD ["java", "-jar", "app.jar"]
